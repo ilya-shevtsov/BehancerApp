@@ -10,7 +10,8 @@ import com.elegion.test.behancer.R
 import com.elegion.test.behancer.data.Storage
 import com.elegion.test.behancer.data.Storage.StorageOwner
 
-abstract class SingleFragmentActivity : AppCompatActivity(), StorageOwner, OnRefreshListener, RefreshOwner {
+abstract class SingleFragmentActivity : AppCompatActivity(), StorageOwner, OnRefreshListener,
+    RefreshOwner {
 
     private lateinit var refresher: SwipeRefreshLayout
 
