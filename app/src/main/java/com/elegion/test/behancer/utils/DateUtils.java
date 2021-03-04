@@ -4,10 +4,6 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
-/**
- * Created by Vladislav Falzan.
- */
-
 public class DateUtils {
 
     public static String format(long time) {
@@ -16,4 +12,6 @@ public class DateUtils {
 
         return sdf.format(date);
     }
+
+    
 }
