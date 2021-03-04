@@ -2,15 +2,10 @@ package com.elegion.test.behancer;
 
 import android.app.Application;
 
-
 import androidx.room.Room;
 
-import com.elegion.test.behancer.data.database.BehanceDatabase;
 import com.elegion.test.behancer.data.Storage;
-
-/**
- * Created by Vladislav Falzan.
- */
+import com.elegion.test.behancer.data.database.BehanceDatabase;
 
 public class AppDelegate extends Application {
 
