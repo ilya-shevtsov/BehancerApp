@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment;
 
 import com.elegion.test.behancer.common.SingleFragmentActivity;
 
+
 /**
  * Created by Vladislav Falzan.
  */

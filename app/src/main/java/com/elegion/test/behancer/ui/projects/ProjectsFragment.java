@@ -15,12 +15,12 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.elegion.test.behancer.BuildConfig;
 import com.elegion.test.behancer.R;
-import com.elegion.test.behancer.ui.profile.ProfileActivity;
-import com.elegion.test.behancer.ui.profile.ProfileFragment;
-import com.elegion.test.behancer.utils.ApiUtils;
 import com.elegion.test.behancer.common.RefreshOwner;
 import com.elegion.test.behancer.common.Refreshable;
 import com.elegion.test.behancer.data.Storage;
+import com.elegion.test.behancer.ui.profile.ProfileActivity;
+import com.elegion.test.behancer.ui.profile.ProfileFragment;
+import com.elegion.test.behancer.utils.ApiUtils;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
@@ -38,6 +38,7 @@ public class ProjectsFragment extends Fragment implements Refreshable, ProjectsA
     private Storage mStorage;
     private ProjectsAdapter mProjectsAdapter;
     private Disposable mDisposable;
+
 
     public static ProjectsFragment newInstance() {
         return new ProjectsFragment();
