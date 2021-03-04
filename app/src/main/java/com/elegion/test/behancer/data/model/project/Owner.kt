@@ -14,20 +14,17 @@ import java.io.Serializable
         childColumns = [("project_id")]
     )]
 )
-class Owner : Serializable {
+data class Owner(
     @PrimaryKey
     @ColumnInfo(name = "id")
-    var id = 0
+    var id: Int = 0,
 
     @ColumnInfo(name = "username")
     @SerializedName("username")
-    var username: String? = null
-        private set
+    var username: String? = null,
+
 
     @ColumnInfo(name = "project_id")
-    var projectId = 0
+    var projectId: Int = 0
 
-    fun setUsername(username: String) {
-        this.username = username
-    }
-}
+) : Serializable

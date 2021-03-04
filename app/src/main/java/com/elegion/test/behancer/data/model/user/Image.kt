@@ -13,15 +13,15 @@ import com.google.gson.annotations.SerializedName
         childColumns = [("user_id")]
     )]
 )
-class Image {
+data class Image(
     @PrimaryKey
     @ColumnInfo(name = "id")
-    var id = 0
+    var id: Int = 0,
 
     @ColumnInfo(name = "photo_url")
     @SerializedName("230")
-    var photoUrl: String? = null
+    var photoUrl: String? = null,
 
     @ColumnInfo(name = "user_id")
-    var userId = 0
-}
+    var userId: Int = 0
+)

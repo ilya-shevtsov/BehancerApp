@@ -1,8 +1,8 @@
 package com.elegion.test.behancer.ui.projects
 
 import android.content.Context
-import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,10 +13,10 @@ import com.elegion.test.behancer.BuildConfig
 import com.elegion.test.behancer.R
 import com.elegion.test.behancer.common.RefreshOwner
 import com.elegion.test.behancer.common.Refreshable
+import com.elegion.test.behancer.common.SingleFragmentActivity
 import com.elegion.test.behancer.data.Storage
 import com.elegion.test.behancer.data.Storage.StorageOwner
 import com.elegion.test.behancer.data.model.project.ProjectResponse
-import com.elegion.test.behancer.ui.profile.ProfileActivity
 import com.elegion.test.behancer.ui.profile.ProfileFragment
 import com.elegion.test.behancer.utils.ApiUtils.Companion.NETWORK_EXCEPTIONS
 import com.elegion.test.behancer.utils.ApiUtils.Companion.getApiService
@@ -27,11 +27,11 @@ import io.reactivex.schedulers.Schedulers
 
 class ProjectsFragment : Fragment(), Refreshable {
 
- companion object{
-     fun newInstance(): ProjectsFragment {
-         return ProjectsFragment()
-     }
- }
+    companion object {
+        fun newInstance(): ProjectsFragment {
+            return ProjectsFragment()
+        }
+    }
 
 
     private lateinit var recycler: RecyclerView
@@ -78,11 +78,17 @@ class ProjectsFragment : Fragment(), Refreshable {
     }
 
     fun onItemClick(username: String?) {
-        val intent = Intent(activity, ProfileActivity::class.java)
-        val args = Bundle()
-        args.putString(ProfileFragment.PROFILE_KEY, username)
-        intent.putExtra(ProfileActivity.USERNAME_KEY, args)
-        startActivity(intent)
+        val arguments = Bundle()
+        arguments.putString(ProfileFragment.PROFILE_KEY, username)
+
+        val profileFragment = ProfileFragment.newInstance(arguments)
+        val activity = activity as? SingleFragmentActivity
+        if (activity != null) {
+            activity.changeFragment(profileFragment)
+        }else{
+            Log.e("ProjectsFragment", "Parent activity is not SingleFragmentActivity")
+        }
+
     }
 
     override fun onDetach() {
