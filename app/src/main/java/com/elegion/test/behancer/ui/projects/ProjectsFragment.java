@@ -26,12 +26,13 @@ import com.elegion.test.behancer.utils.ApiUtils;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
+import kotlin.Unit;
 
 /**
  * Created by Vladislav Falzan.
  */
 
-public class ProjectsFragment extends Fragment implements Refreshable, ProjectsAdapter.OnItemClickListener {
+public class ProjectsFragment extends Fragment implements Refreshable {
 
     private RecyclerView mRecyclerView;
     private RefreshOwner mRefreshOwner;
@@ -77,14 +78,19 @@ public class ProjectsFragment extends Fragment implements Refreshable, ProjectsA
             getActivity().setTitle(R.string.projects);
         }
 
-        mProjectsAdapter = new ProjectsAdapter(this);
+        mProjectsAdapter = new ProjectsAdapter(username -> {
+            onItemClick(username);
+            return Unit.INSTANCE;
+        }
+        );
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         mRecyclerView.setAdapter(mProjectsAdapter);
+
 
         onRefreshData();
     }
 
-    @Override
+
     public void onItemClick(String username) {
         Intent intent = new Intent(getActivity(), ProfileActivity.class);
         Bundle args = new Bundle();

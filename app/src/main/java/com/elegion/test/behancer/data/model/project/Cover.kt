@@ -10,8 +10,8 @@ import java.io.Serializable
 @Entity(
     foreignKeys = [ForeignKey(
         entity = Project::class,
-        parentColumns = arrayOf("id"),
-        childColumns = arrayOf("project_id")
+        parentColumns = [("id")],
+        childColumns = [("project_id")]
     )]
 )
 class Cover : Serializable {

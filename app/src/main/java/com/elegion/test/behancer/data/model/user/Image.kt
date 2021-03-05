@@ -9,8 +9,8 @@ import com.google.gson.annotations.SerializedName
 @Entity(
     foreignKeys = [ForeignKey(
         entity = User::class,
-        parentColumns = arrayOf("id"),
-        childColumns = arrayOf("user_id")
+        parentColumns = [("id")],
+        childColumns = [("user_id")]
     )]
 )
 class Image {

@@ -12,7 +12,7 @@ class ProfileActivity : SingleFragmentActivity() {
 
     override fun getFragment(): Fragment {
         if (intent != null) {
-            return ProfileFragment.newInstance()
+            return ProfileFragment.newInstance(intent.getBundleExtra(USERNAME_KEY))!!
         }
         throw IllegalStateException("getIntent cannot be null")
     }

@@ -38,8 +38,10 @@ class ProfileFragment : Fragment(), Refreshable {
 
     companion object {
         const val PROFILE_KEY = "PROFILE_KEY"
-        fun newInstance(): ProfileFragment {
-            return ProfileFragment()
+        fun newInstance(args: Bundle?): ProfileFragment? {
+            val fragment = ProfileFragment()
+            fragment.arguments = args
+            return fragment
         }
     }
 
