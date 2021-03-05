@@ -16,7 +16,7 @@ import java.net.UnknownHostException
 class ApiUtils {
 
     companion object {
-        var NETWORK_EXCEPTIONS = listOf(
+        val NETWORK_EXCEPTIONS = listOf(
             UnknownHostException::class,
             SocketTimeoutException::class,
             ConnectException::class
