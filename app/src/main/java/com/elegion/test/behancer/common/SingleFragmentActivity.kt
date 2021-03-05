@@ -55,7 +55,7 @@ abstract class SingleFragmentActivity : AppCompatActivity(), StorageOwner, OnRef
         refresher.post { refresher.isRefreshing = refreshing }
     }
 
-    override fun obtainStorage(): Storage {
+    override fun obtainStorage(): Storage? {
         return (applicationContext as AppDelegate).storage
     }
 
