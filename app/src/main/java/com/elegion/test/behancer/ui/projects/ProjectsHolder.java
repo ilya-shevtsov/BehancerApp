@@ -40,7 +40,7 @@ public class ProjectsHolder extends RecyclerView.ViewHolder {
 
         mName.setText(item.getName());
         mUsername.setText(item.getOwners().get(FIRST_OWNER_INDEX).getUsername());
-        mPublishedOn.setText(DateUtils.format(item.getPublishedOn()));
+        mPublishedOn.setText(DateUtils.INSTANCE.format(item.getPublishedOn()));
 
         if (onItemClickListener != null) {
             itemView.setOnClickListener(v -> onItemClickListener.onItemClick(
