@@ -1,7 +1,7 @@
 package com.elegion.test.behancer.ui.profile
 
 import androidx.fragment.app.Fragment
-import com.elegion.test.behancer.commonKotlin.SingleFragmentActivity
+import com.elegion.test.behancer.common.SingleFragmentActivity
 
 
 class ProfileActivity : SingleFragmentActivity() {

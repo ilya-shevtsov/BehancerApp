@@ -9,8 +9,8 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import com.elegion.test.behancer.R
-import com.elegion.test.behancer.commonKotlin.RefreshOwner
-import com.elegion.test.behancer.commonKotlin.Refreshable
+import com.elegion.test.behancer.common.RefreshOwner
+import com.elegion.test.behancer.common.Refreshable
 import com.elegion.test.behancer.data.Storage
 import com.elegion.test.behancer.data.Storage.StorageOwner
 import com.elegion.test.behancer.data.model.user.User

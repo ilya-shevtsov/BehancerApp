@@ -16,8 +16,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.elegion.test.behancer.BuildConfig;
 import com.elegion.test.behancer.R;
-import com.elegion.test.behancer.commonKotlin.RefreshOwner;
-import com.elegion.test.behancer.commonKotlin.Refreshable;
+import com.elegion.test.behancer.common.RefreshOwner;
+import com.elegion.test.behancer.common.Refreshable;
 import com.elegion.test.behancer.data.Storage;
 import com.elegion.test.behancer.ui.profile.ProfileActivity;
 import com.elegion.test.behancer.ui.profile.ProfileFragment;

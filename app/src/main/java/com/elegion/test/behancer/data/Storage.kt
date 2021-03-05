@@ -15,9 +15,9 @@ class Storage(private val mBehanceDao: BehanceDao) {
         mBehanceDao.insertProjects(projects)
         val assembled = assemble(projects)
         mBehanceDao.clearCoverTable()
-        mBehanceDao.insertCovers(assembled.first)
+        assembled.first?.let { mBehanceDao.insertCovers(it) }
         mBehanceDao.clearOwnerTable()
-        mBehanceDao.insertOwners(assembled.second)
+        assembled.second?.let { mBehanceDao.insertOwners(it) }
     }
 
     private fun assemble(projects: List<Project>): Pair<List<Cover>, List<Owner>> {
@@ -38,7 +38,7 @@ class Storage(private val mBehanceDao: BehanceDao) {
 
     val projects: ProjectResponse
         get() {
-            val projects = mBehanceDao.projects
+            val projects = mBehanceDao.projects()
             for (project in projects) {
                 project.cover = mBehanceDao.getCoverFromProject(project.id)
                 project.owners = mBehanceDao.getOwnersFromProject(project.id)
@@ -57,7 +57,7 @@ class Storage(private val mBehanceDao: BehanceDao) {
         mBehanceDao.insertImage(image)
     }
 
-    fun getUser(username: String?): UserResponse {
+    fun getUser(username: String): UserResponse {
         val user = mBehanceDao.getUserByName(username)
         val image = mBehanceDao.getImageFromUser(user.id)
         user.image = image

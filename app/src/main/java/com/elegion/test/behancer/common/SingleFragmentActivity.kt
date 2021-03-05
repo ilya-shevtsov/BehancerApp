@@ -1,4 +1,4 @@
-package com.elegion.test.behancer.commonKotlin
+package com.elegion.test.behancer.common
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
