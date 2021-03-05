@@ -1,7 +1,6 @@
 package com.elegion.test.behancer.data.model.project;
 
 
-
 import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
@@ -12,10 +11,6 @@ import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
 import java.util.List;
-
-/**
- * Created by Vladislav Falzan.
- */
 @Entity
 public class Project implements Serializable {
 
