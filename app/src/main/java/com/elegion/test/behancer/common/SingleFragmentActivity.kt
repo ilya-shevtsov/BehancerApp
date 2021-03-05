@@ -23,7 +23,6 @@ abstract class SingleFragmentActivity : AppCompatActivity(), StorageOwner, OnRef
         refresher.setOnRefreshListener(this)
 
         if (savedInstanceState == null){
-//            openFragment(fragment = ProjectsFragment.newInstance())
             changeFragment(fragment = getFragment())
         }
     }
