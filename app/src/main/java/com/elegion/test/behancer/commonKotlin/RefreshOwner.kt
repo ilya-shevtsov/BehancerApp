@@ -1,4 +1,4 @@
-package com.elegion.test.behancer.common
+package com.elegion.test.behancer.commonKotlin
 
 interface RefreshOwner {
     fun setRefreshState(refreshing: Boolean)

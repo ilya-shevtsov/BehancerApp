@@ -1,5 +1,6 @@
 package com.elegion.test.behancer.ui.projects;
 
+
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -15,8 +16,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.elegion.test.behancer.BuildConfig;
 import com.elegion.test.behancer.R;
-import com.elegion.test.behancer.common.RefreshOwner;
-import com.elegion.test.behancer.common.Refreshable;
+import com.elegion.test.behancer.commonKotlin.RefreshOwner;
+import com.elegion.test.behancer.commonKotlin.Refreshable;
 import com.elegion.test.behancer.data.Storage;
 import com.elegion.test.behancer.ui.profile.ProfileActivity;
 import com.elegion.test.behancer.ui.profile.ProfileFragment;
@@ -108,10 +109,10 @@ public class ProjectsFragment extends Fragment implements Refreshable, ProjectsA
     }
 
     private void getProjects() {
-        mDisposable = ApiUtils.getApiService().getProjects(BuildConfig.API_QUERY)
+        mDisposable = ApiUtils.Companion.getApiService().getProjects(BuildConfig.API_QUERY)
                 .doOnSuccess(response -> mStorage.insertProjects(response))
                 .onErrorReturn(throwable ->
-                        ApiUtils.NETWORK_EXCEPTIONS.contains(throwable.getClass()) ? mStorage.getProjects() : null)
+                        ApiUtils.Companion.getNETWORK_EXCEPTIONS().contains(throwable.getClass()) ? mStorage.getProjects() : null)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .doOnSubscribe(disposable -> mRefreshOwner.setRefreshState(true))

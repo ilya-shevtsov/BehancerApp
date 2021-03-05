@@ -9,8 +9,8 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import com.elegion.test.behancer.R
-import com.elegion.test.behancer.common.RefreshOwner
-import com.elegion.test.behancer.common.Refreshable
+import com.elegion.test.behancer.commonKotlin.RefreshOwner
+import com.elegion.test.behancer.commonKotlin.Refreshable
 import com.elegion.test.behancer.data.Storage
 import com.elegion.test.behancer.data.Storage.StorageOwner
 import com.elegion.test.behancer.data.model.user.User
@@ -99,10 +99,8 @@ class ProfileFragment : Fragment(), Refreshable {
                 }
             }
             .onErrorReturn { throwable: Throwable ->
-                if (ApiUtils.NETWORK_EXCEPTIONS.contains(
-                        throwable.javaClass
-                    )
-                ) mStorage.getUser(mUsername) else null
+                if (ApiUtils.NETWORK_EXCEPTIONS.contains(throwable::class))
+                mStorage.getUser(mUsername) else null
             }
             .observeOn(AndroidSchedulers.mainThread())
             .doOnSubscribe { disposable: Disposable? ->
@@ -133,12 +131,4 @@ class ProfileFragment : Fragment(), Refreshable {
         mProfileLocation.text = user.location
     }
 
-//    override fun onDetach() {
-//        mStorage = null
-//        mRefreshOwner = null
-//        if (mDisposable != null) {
-//            mDisposable.dispose()
-//        }
-//        super.onDetach()
-//    }
 }
