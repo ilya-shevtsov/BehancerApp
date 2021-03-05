@@ -46,7 +46,7 @@ class ProfileFragment : Fragment(), Refreshable {
     override fun onAttach(context: Context) {
         super.onAttach(context)
         if (context is StorageOwner) {
-            mStorage = (context as StorageOwner).obtainStorage()
+            mStorage = (context as StorageOwner).obtainStorage()!!
         }
         if (context is RefreshOwner) {
             mRefreshOwner = context
@@ -92,9 +92,11 @@ class ProfileFragment : Fragment(), Refreshable {
         mDisposable = ApiUtils.getApiService().getUserInfo(mUsername)
             .subscribeOn(Schedulers.io())
             .doOnSuccess { response: UserResponse? ->
-                mStorage.insertUser(
-                    response
-                )
+                if (response != null) {
+                    mStorage.insertUser(
+                        response
+                    )
+                }
             }
             .onErrorReturn { throwable: Throwable ->
                 if (ApiUtils.NETWORK_EXCEPTIONS.contains(
