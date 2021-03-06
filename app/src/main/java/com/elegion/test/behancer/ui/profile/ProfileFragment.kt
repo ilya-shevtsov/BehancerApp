@@ -102,7 +102,7 @@ class ProfileFragment : Fragment(), Refreshable {
             }
             .onErrorReturn { throwable: Throwable ->
                 if (ApiUtils.NETWORK_EXCEPTIONS.contains(throwable::class))
-                mStorage.getUser(mUsername) else null
+                    mStorage.getUser(mUsername) else null
             }
             .observeOn(AndroidSchedulers.mainThread())
             .doOnSubscribe { disposable: Disposable? ->
@@ -124,10 +124,13 @@ class ProfileFragment : Fragment(), Refreshable {
     }
 
     private fun bind(user: User) {
-        Picasso.with(context)
-            .load(user.image.photoUrl)
-            .fit()
-            .into(mProfileImage)
+        val url = user.image?.photoUrl
+        if (url != null) {
+            Picasso.with(context)
+                .load(url)
+                .fit()
+                .into(mProfileImage)
+        }
         mProfileName.text = user.displayName
         mProfileCreatedOn.text = DateUtils.format(user.createdOn)
         mProfileLocation.text = user.location

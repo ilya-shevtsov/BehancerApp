@@ -55,19 +55,21 @@ class Storage(private val mBehanceDao: BehanceDao) {
     fun insertUser(response: UserResponse) {
         val user = response.user
         val image = user.image
-        image.id = user.id
-        image.userId = user.id
+        if (image != null){
+            image.id = user.id
+            image.userId = user.id
+            mBehanceDao.insertImage(image)
+        }
         mBehanceDao.insertUser(user)
-        mBehanceDao.insertImage(image)
+
+
     }
 
     fun getUser(username: String): UserResponse {
         val user = mBehanceDao.getUserByName(username)
         val image = mBehanceDao.getImageFromUser(user.id)
         user.image = image
-        val response = UserResponse()
-        response.user = user
-        return response
+        return UserResponse(user)
     }
 
     interface StorageOwner {
