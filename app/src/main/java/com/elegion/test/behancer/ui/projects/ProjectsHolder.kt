@@ -28,14 +28,18 @@ class ProjectsHolder(
         onItemClicked: (username: String) -> Unit
 
     ) {
-        Picasso.with(image.context).load(project.cover.photoUrl)
-            .fit()
-            .into(image)
+        if(project.cover?.photoUrl != null) {
+            Picasso.with(image.context).load(project.cover?.photoUrl)
+                .fit()
+                .into(image)
+        }else{
+
+        }
         name.text = project.name
-        userName.text = project.owners[FIRST_OWNER_INDEX].username
+        userName.text = project.owners?.get(FIRST_OWNER_INDEX)?.username.orEmpty()
         publishedDate.text = format(project.publishedOn)
         containerView.setOnClickListener {
-            onItemClicked.invoke(project.owners.first().username.orEmpty())
+            onItemClicked.invoke(project.owners?.first()?.username.orEmpty())
         }
 
     }

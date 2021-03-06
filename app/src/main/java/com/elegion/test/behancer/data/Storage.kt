@@ -25,13 +25,19 @@ class Storage(private val mBehanceDao: BehanceDao) {
         val owners: MutableList<Owner> = ArrayList()
         for (i in projects.indices) {
             val cover = projects[i].cover
-            cover.id = i
-            cover.projectId = projects[i].id
-            covers.add(cover)
-            val owner = projects[i].owners[0]
-            owner.id = i
-            owner.projectId = projects[i].id
-            owners.add(owner)
+            if (cover != null) {
+                cover.id = i
+                cover.projectId = projects[i].id
+                covers.add(cover)
+                val owner = projects[i].owners?.get(0)
+                if (owner != null) {
+                    owner.id = i
+                    owner.projectId = projects[i].id
+                    owners.add(owner)
+                }
+
+            }
+
         }
         return Pair(covers, owners)
     }
