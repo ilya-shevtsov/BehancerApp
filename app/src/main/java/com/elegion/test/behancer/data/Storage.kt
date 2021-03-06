@@ -49,9 +49,7 @@ class Storage(private val mBehanceDao: BehanceDao) {
                 project.cover = mBehanceDao.getCoverFromProject(project.id)
                 project.owners = mBehanceDao.getOwnersFromProject(project.id)
             }
-            val response = ProjectResponse()
-            response.projects = projects
-            return response
+            return ProjectResponse(projects)
         }
 
     fun insertUser(response: UserResponse) {
