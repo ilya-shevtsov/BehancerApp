@@ -9,66 +9,61 @@ import com.elegion.test.behancer.data.model.project.ProjectResponse
 import com.elegion.test.behancer.data.model.user.UserResponse
 import java.util.*
 
-class Storage(private val mBehanceDao: BehanceDao) {
+class Storage(private val behanceDao: BehanceDao) {
     fun insertProjects(response: ProjectResponse) {
         val projects = response.projectList
-        mBehanceDao.insertProjectList(projects)
+        behanceDao.insertProjectList(projects)
         val assembled = assemble(projects)
-        mBehanceDao.clearCoverTable()
-        assembled.first?.let { mBehanceDao.insertCoverList(it) }
-        mBehanceDao.clearOwnerTable()
-        assembled.second?.let { mBehanceDao.insertOwnerList(it) }
+        behanceDao.clearCoverTable()
+        assembled.first?.let { behanceDao.insertCoverList(it) }
+        behanceDao.clearOwnerTable()
+        assembled.second?.let { behanceDao.insertOwnerList(it) }
     }
 
-    private fun assemble(projects: List<Project>): Pair<List<Cover>, List<Owner>> {
-        val covers: MutableList<Cover> = ArrayList()
-        val owners: MutableList<Owner> = ArrayList()
-        for (i in projects.indices) {
-            val cover = projects[i].cover
+    private fun assemble(projectList: List<Project>): Pair<List<Cover>, List<Owner>> {
+        val coverList: MutableList<Cover> = ArrayList()
+        val ownerList: MutableList<Owner> = ArrayList()
+        for (project in projectList.indices) {
+            val cover = projectList[project].cover
             if (cover != null) {
-                cover.id = i
-                cover.projectId = projects[i].id
-                covers.add(cover)
-                val owner = projects[i].ownerList?.get(0)
+                cover.id = project
+                cover.projectId = projectList[project].id
+                coverList.add(cover)
+                val owner = projectList[project].ownerList?.get(0)
                 if (owner != null) {
-                    owner.id = i
-                    owner.projectId = projects[i].id
-                    owners.add(owner)
+                    owner.id = project
+                    owner.projectId = projectList[project].id
+                    ownerList.add(owner)
                 }
-
             }
-
         }
-        return Pair(covers, owners)
+        return Pair(coverList, ownerList)
     }
 
-    val projects: ProjectResponse
+    val projectListResponse: ProjectResponse
         get() {
-            val projects = mBehanceDao.projectList()
-            for (project in projects) {
-                project.cover = mBehanceDao.getCoverFromProject(project.id)
-                project.ownerList = mBehanceDao.getOwnerListFromProject(project.id)
+            val projectList = behanceDao.projectList()
+            for (project in projectList) {
+                project.cover = behanceDao.getCoverFromProject(project.id)
+                project.ownerList = behanceDao.getOwnerListFromProject(project.id)
             }
-            return ProjectResponse(projects)
+            return ProjectResponse(projectList)
         }
 
     fun insertUser(response: UserResponse) {
         val user = response.user
-        mBehanceDao.insertUser(user)
+        behanceDao.insertUser(user)
         val image = user.image
-        if (image != null){
+        if (image != null) {
             image.id = user.id
             image.userId = user.id
-            mBehanceDao.insertImage(image)
+            behanceDao.insertImage(image)
         }
-
-
-
     }
 
     fun getUser(username: String): UserResponse {
-        val user = mBehanceDao.getUserByName(username)
-        val image = mBehanceDao.getImageFromUser(user.id)
+        val user = behanceDao.getUserByName(username)
+        val image = behanceDao.getImageFromUser(user.id)
         user.image = image
         return UserResponse(user)
     }

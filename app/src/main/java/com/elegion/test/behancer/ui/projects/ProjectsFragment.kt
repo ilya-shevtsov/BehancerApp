@@ -113,7 +113,7 @@ class ProjectsFragment : Fragment(), Refreshable {
             }
             .onErrorReturn { throwable: Throwable ->
                 if (NETWORK_EXCEPTIONS.contains(throwable::class)
-                ) storage?.projects else null
+                ) storage?.projectListResponse else null
             }
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
