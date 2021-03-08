@@ -28,8 +28,6 @@ open class SingleFragmentActivity : AppCompatActivity(), StorageOwner, OnRefresh
         }
     }
 
-//    protected abstract fun getFragment(): Fragment
-
     open fun changeFragment(fragment: Fragment) {
         val addToBackStack = supportFragmentManager.findFragmentById(R.id.fragmentContainer) != null
         val transaction = supportFragmentManager
@@ -60,10 +58,10 @@ open class SingleFragmentActivity : AppCompatActivity(), StorageOwner, OnRefresh
         return (applicationContext as AppDelegate).storage
     }
 
-    fun openFragment(fragment: Fragment) {
-        supportFragmentManager.beginTransaction()
-            .replace(R.id.fragmentContainer, fragment)
-            .addToBackStack(fragment::class.java.canonicalName)
-            .commit()
-    }
+//    fun openFragment(fragment: Fragment) {
+//        supportFragmentManager.beginTransaction()
+//            .replace(R.id.fragmentContainer, fragment)
+//            .addToBackStack(fragment::class.java.canonicalName)
+//            .commit()
+//    }
 }

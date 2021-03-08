@@ -10,7 +10,7 @@ import retrofit2.http.Query
 interface BehanceApi {
 
     @GET("v2/projects")
-    fun getProjects(@Query("q") query: String): Single<ProjectResponse>
+    fun getProjectList(@Query("q") query: String): Single<ProjectResponse>
 
     @GET("v2/users/{username}")
     fun getUserInfo(@Path("username") username: String?): Single<UserResponse>

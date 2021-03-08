@@ -13,13 +13,13 @@ import com.elegion.test.behancer.data.model.user.User
 @Dao
 interface BehanceDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertProjects(projects: List<Project>)
+    fun insertProjectList(projects: List<Project>)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertCovers(covers: List<Cover>)
+    fun insertCoverList(covers: List<Cover>)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertOwners(owners: List<Owner>)
+    fun insertOwnerList(owners: List<Owner>)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertUser(user: User)
@@ -28,32 +28,32 @@ interface BehanceDao {
     fun insertImage(image: Image)
 
     @Query("SELECT * FROM project")
-    fun projects(): List<Project>
+    fun projectList(): List<Project>
 
-    @Query("select * from cover where project_id = :projectId")
+    @Query("SELECT * FROM cover WHERE project_id = :projectId")
     fun getCoverFromProject(projectId: Int): Cover
 
-    @Query("select * from owner where project_id = :projectId")
-    fun getOwnersFromProject(projectId: Int): List<Owner>
+    @Query("SELECT * FROM owner WHERE project_id = :projectId")
+    fun getOwnerListFromProject(projectId: Int): List<Owner>
 
-    @Query("select * from user where username = :userName")
+    @Query("SELECT * FROM user WHERE username = :userName")
     fun getUserByName(userName: String): User
 
-    @Query("select * from image where user_id = :userId")
+    @Query("SELECT * FROM image WHERE user_id = :userId")
     fun getImageFromUser(userId: Int): Image
 
-    @Query("delete from owner")
+    @Query("DELETE FROM owner")
     fun clearOwnerTable()
 
-    @Query("delete from cover")
+    @Query("DELETE FROM cover")
     fun clearCoverTable()
 
-    @Query("delete from image")
+    @Query("DELETE FROM image")
     fun clearImageTable()
 
-    @get:Query("select * from user")
-    val users: List<User>
+    @get:Query("SELECT * FROM user")
+    val userList: List<User>
 
-    @get:Query("select * from image")
-    val images: List<Image>
+    @get:Query("SELECT * FROM image")
+    val imageList: List<Image>
 }

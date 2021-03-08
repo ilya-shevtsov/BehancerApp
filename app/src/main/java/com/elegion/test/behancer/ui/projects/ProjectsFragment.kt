@@ -105,7 +105,7 @@ class ProjectsFragment : Fragment(), Refreshable {
     }
 
     private fun getProjects() {
-        disposable = getApiService().getProjects(BuildConfig.API_QUERY)
+        disposable = getApiService().getProjectList(BuildConfig.API_QUERY)
             .doOnSuccess { response: ProjectResponse ->
                 storage?.insertProjects(
                     response

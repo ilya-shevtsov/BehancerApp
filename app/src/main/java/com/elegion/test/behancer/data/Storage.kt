@@ -12,12 +12,12 @@ import java.util.*
 class Storage(private val mBehanceDao: BehanceDao) {
     fun insertProjects(response: ProjectResponse) {
         val projects = response.projects
-        mBehanceDao.insertProjects(projects)
+        mBehanceDao.insertProjectList(projects)
         val assembled = assemble(projects)
         mBehanceDao.clearCoverTable()
-        assembled.first?.let { mBehanceDao.insertCovers(it) }
+        assembled.first?.let { mBehanceDao.insertCoverList(it) }
         mBehanceDao.clearOwnerTable()
-        assembled.second?.let { mBehanceDao.insertOwners(it) }
+        assembled.second?.let { mBehanceDao.insertOwnerList(it) }
     }
 
     private fun assemble(projects: List<Project>): Pair<List<Cover>, List<Owner>> {
@@ -44,10 +44,10 @@ class Storage(private val mBehanceDao: BehanceDao) {
 
     val projects: ProjectResponse
         get() {
-            val projects = mBehanceDao.projects()
+            val projects = mBehanceDao.projectList()
             for (project in projects) {
                 project.cover = mBehanceDao.getCoverFromProject(project.id)
-                project.owners = mBehanceDao.getOwnersFromProject(project.id)
+                project.owners = mBehanceDao.getOwnerListFromProject(project.id)
             }
             return ProjectResponse(projects)
         }
