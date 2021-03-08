@@ -45,6 +45,16 @@ class ProfileFragment : Fragment(), Refreshable {
         }
     }
 
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        if (context is StorageOwner) {
+            storage = (context as StorageOwner).obtainStorage()!!
+        }
+        if (context is RefreshOwner) {
+            refreshOwner = context
+        }
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -65,25 +75,6 @@ class ProfileFragment : Fragment(), Refreshable {
         profile.visibility = View.VISIBLE
         onRefreshData()
     }
-
-//    override fun onActivityCreated(savedInstanceState: Bundle?) {
-//        super.onActivityCreated(savedInstanceState)
-//////        if (arguments != null) {
-//////        }
-////        if (activity != null) {
-
-//    }
-
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        if (context is StorageOwner) {
-            storage = (context as StorageOwner).obtainStorage()!!
-        }
-        if (context is RefreshOwner) {
-            refreshOwner = context
-        }
-    }
-
 
     override fun onRefreshData() {
         getProfile()
@@ -135,5 +126,4 @@ class ProfileFragment : Fragment(), Refreshable {
         profileCreatedOn.text = DateUtils.format(user.createdOn)
         profileLocation.text = user.location
     }
-
 }

@@ -10,6 +10,7 @@ import com.elegion.test.behancer.data.model.user.UserResponse
 import java.util.*
 
 class Storage(private val behanceDao: BehanceDao) {
+
     fun insertProjects(response: ProjectResponse) {
         val projects = response.projectList
         behanceDao.insertProjectList(projects)

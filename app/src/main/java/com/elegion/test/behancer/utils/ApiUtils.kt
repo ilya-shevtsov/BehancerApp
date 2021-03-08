@@ -22,46 +22,30 @@ class ApiUtils {
             ConnectException::class
         )
 
-        private lateinit var sClient: OkHttpClient
-        private lateinit var sRetrofit: Retrofit
-        private lateinit var sGson: Gson
-        private lateinit var sApi: BehanceApi
-
-        private fun getClient(): OkHttpClient {
-
-            val builder = OkHttpClient.Builder()
-            builder.addInterceptor(ApiKeyInterceptor())
-            if (!BuildConfig.BUILD_TYPE.contains("release")) {
-                builder.addInterceptor(
-                    HttpLoggingInterceptor()
-                        .setLevel(
-                            HttpLoggingInterceptor
-                                .Level.BODY
-                        )
-                )
-            }
-            sClient = builder.build()
-
-            return sClient
-        }
-
+        private fun getClient(): OkHttpClient = OkHttpClient.Builder()
+            .setupInterceptors()
+            .build()
 
         private fun getRetrofit(): Retrofit {
-
-            sGson = Gson()
-            sRetrofit = Retrofit.Builder()
+            return Retrofit.Builder()
                 .baseUrl(BuildConfig.API_URL)
                 .client(getClient())
-                .addConverterFactory(GsonConverterFactory.create(sGson))
+                .addConverterFactory(GsonConverterFactory.create(Gson()))
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .build()
-
-            return sRetrofit
         }
 
         fun getApiService(): BehanceApi {
-            sApi = getRetrofit().create(BehanceApi::class.java)
-            return sApi
+            return getRetrofit().create(BehanceApi::class.java)
+        }
+
+        private fun OkHttpClient.Builder.setupInterceptors() = apply {
+            addInterceptor(ApiKeyInterceptor())
+            if (!BuildConfig.BUILD_TYPE.contains("release")) {
+                addInterceptor(
+                    HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY)
+                )
+            }
         }
     }
 }
