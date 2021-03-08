@@ -35,7 +35,5 @@ class ProjectsAdapter(
         }
         projectList.addAll(data)
         notifyDataSetChanged()
-
     }
-
 }

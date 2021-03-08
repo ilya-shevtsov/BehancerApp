@@ -25,23 +25,22 @@ import io.reactivex.schedulers.Schedulers
 
 class ProfileFragment : Fragment(), Refreshable {
 
-    private lateinit var mRefreshOwner: RefreshOwner
-    private lateinit var mErrorView: View
-    private lateinit var mProfileView: View
-    private lateinit var mUsername: String
-    private lateinit var mStorage: Storage
-    private lateinit var mDisposable: Disposable
+    private lateinit var refreshOwner: RefreshOwner
+    private lateinit var error: View
+    private lateinit var profile: View
+    private lateinit var username: String
+    private lateinit var storage: Storage
+    private lateinit var disposable: Disposable
 
-    private lateinit var mProfileImage: ImageView
-    private lateinit var mProfileName: TextView
-    private lateinit var mProfileCreatedOn: TextView
-    private lateinit var mProfileLocation: TextView
+    private lateinit var profileImage: ImageView
+    private lateinit var profileName: TextView
+    private lateinit var profileCreatedOn: TextView
+    private lateinit var profileLocation: TextView
 
     companion object {
-        const val PROFILE_KEY = "PROFILE_KEY"
-        fun newInstance(args: Bundle): ProfileFragment {
+        fun newInstance(username: String): ProfileFragment {
             val fragment = ProfileFragment()
-            fragment.arguments = args
+            fragment.username = username
             return fragment
         }
     }
@@ -49,13 +48,12 @@ class ProfileFragment : Fragment(), Refreshable {
     override fun onAttach(context: Context) {
         super.onAttach(context)
         if (context is StorageOwner) {
-            mStorage = (context as StorageOwner).obtainStorage()!!
+            storage = (context as StorageOwner).obtainStorage()!!
         }
         if (context is RefreshOwner) {
-            mRefreshOwner = context
+            refreshOwner = context
         }
     }
-
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -66,62 +64,53 @@ class ProfileFragment : Fragment(), Refreshable {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        mErrorView = view.findViewById(R.id.errorView)
-        mProfileView = view.findViewById(R.id.view_profile)
-        mProfileImage = view.findViewById(R.id.iv_profile)
-        mProfileName = view.findViewById(R.id.tv_display_name_details)
-        mProfileCreatedOn = view.findViewById(R.id.tv_created_on_details)
-        mProfileLocation = view.findViewById(R.id.tv_location_details)
-    }
+        error = view.findViewById(R.id.errorView)
+        profile = view.findViewById(R.id.view_profile)
+        profileImage = view.findViewById(R.id.iv_profile)
+        profileName = view.findViewById(R.id.tv_display_name_details)
+        profileCreatedOn = view.findViewById(R.id.tv_created_on_details)
+        profileLocation = view.findViewById(R.id.tv_location_details)
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        if (arguments != null) {
-            mUsername = arguments!!.getString(PROFILE_KEY)!!
-        }
-        if (activity != null) {
-            activity!!.title = mUsername
-        }
-        mProfileView.visibility = View.VISIBLE
+        activity?.title = username
+        profile.visibility = View.VISIBLE
         onRefreshData()
     }
-
 
     override fun onRefreshData() {
         getProfile()
     }
 
     private fun getProfile() {
-        mDisposable = ApiUtils.getApiService().getUserInfo(mUsername)
+        disposable = ApiUtils.getApiService().getUserInfo(username)
             .subscribeOn(Schedulers.io())
             .doOnSuccess { response: UserResponse? ->
                 if (response != null) {
-                    mStorage.insertUser(
+                    storage.insertUser(
                         response
                     )
                 }
             }
             .onErrorReturn { throwable: Throwable ->
                 if (ApiUtils.NETWORK_EXCEPTIONS.contains(throwable::class))
-                    mStorage.getUser(mUsername) else null
+                    storage.getUser(username) else null
             }
             .observeOn(AndroidSchedulers.mainThread())
             .doOnSubscribe {
-                mRefreshOwner.setRefreshState(
+                refreshOwner.setRefreshState(
                     true
                 )
             }
-            .doFinally { mRefreshOwner.setRefreshState(false) }
+            .doFinally { refreshOwner.setRefreshState(false) }
             .subscribe(
                 { response: UserResponse ->
-                    mErrorView.visibility = View.GONE
-                    mProfileView.visibility = View.VISIBLE
+                    error.visibility = View.GONE
+                    profile.visibility = View.VISIBLE
                     bind(response.user)
                 }
             ) {
-                Log.e("ProfileFragment","This is what went wrong $it")
-                mErrorView.visibility = View.VISIBLE
-                mProfileView.visibility = View.GONE
+                Log.e("ProfileFragment", "This is what went wrong $it")
+                error.visibility = View.VISIBLE
+                profile.visibility = View.GONE
             }
     }
 
@@ -131,11 +120,10 @@ class ProfileFragment : Fragment(), Refreshable {
             Picasso.with(context)
                 .load(url)
                 .fit()
-                .into(mProfileImage)
+                .into(profileImage)
         }
-        mProfileName.text = user.displayName
-        mProfileCreatedOn.text = DateUtils.format(user.createdOn)
-        mProfileLocation.text = user.location
+        profileName.text = user.displayName
+        profileCreatedOn.text = DateUtils.format(user.createdOn)
+        profileLocation.text = user.location
     }
-
 }
