@@ -30,6 +30,6 @@ data class Project  (
 
     @SerializedName("owners")
     @Ignore
-    var owners: List<Owner>? = null
+    var ownerList: List<Owner>? = null
 
 ): Serializable

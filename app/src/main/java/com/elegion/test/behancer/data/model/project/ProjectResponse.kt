@@ -6,5 +6,5 @@ import java.io.Serializable
 
 data class ProjectResponse(
     @SerializedName("projects")
-    val projects: List<Project>
+    val projectList: List<Project>
 ) : Serializable

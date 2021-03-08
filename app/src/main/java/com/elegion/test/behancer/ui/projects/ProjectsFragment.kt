@@ -127,7 +127,7 @@ class ProjectsFragment : Fragment(), Refreshable {
                 { response: ProjectResponse ->
                     error.visibility = View.GONE
                     recycler.visibility = View.VISIBLE
-                    projectsAdapter.addData(response.projects, true)
+                    projectsAdapter.addData(response.projectList, true)
                 }
             ) {
                 error.visibility = View.VISIBLE

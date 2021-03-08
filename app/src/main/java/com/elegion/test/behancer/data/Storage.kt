@@ -11,7 +11,7 @@ import java.util.*
 
 class Storage(private val mBehanceDao: BehanceDao) {
     fun insertProjects(response: ProjectResponse) {
-        val projects = response.projects
+        val projects = response.projectList
         mBehanceDao.insertProjectList(projects)
         val assembled = assemble(projects)
         mBehanceDao.clearCoverTable()
@@ -29,7 +29,7 @@ class Storage(private val mBehanceDao: BehanceDao) {
                 cover.id = i
                 cover.projectId = projects[i].id
                 covers.add(cover)
-                val owner = projects[i].owners?.get(0)
+                val owner = projects[i].ownerList?.get(0)
                 if (owner != null) {
                     owner.id = i
                     owner.projectId = projects[i].id
@@ -47,7 +47,7 @@ class Storage(private val mBehanceDao: BehanceDao) {
             val projects = mBehanceDao.projectList()
             for (project in projects) {
                 project.cover = mBehanceDao.getCoverFromProject(project.id)
-                project.owners = mBehanceDao.getOwnerListFromProject(project.id)
+                project.ownerList = mBehanceDao.getOwnerListFromProject(project.id)
             }
             return ProjectResponse(projects)
         }
