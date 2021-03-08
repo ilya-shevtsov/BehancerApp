@@ -69,23 +69,21 @@ class ProjectsFragment : Fragment(), Refreshable {
         if (activity != null) {
             activity!!.setTitle(R.string.projects)
         }
-        projectsAdapter = ProjectsAdapter { username ->
+        projectsAdapter = ProjectsAdapter(onItemClicked = { username: String ->
             onItemClick(username)
-        }
+        })
+
         recycler.layoutManager = LinearLayoutManager(activity)
         recycler.adapter = projectsAdapter
         onRefreshData()
     }
 
-    fun onItemClick(username: String?) {
-        val arguments = Bundle()
-        arguments.putString(ProfileFragment.PROFILE_KEY, username)
-
-        val profileFragment = ProfileFragment.newInstance(arguments)
+    fun onItemClick(username: String) {
+        val profileFragment = ProfileFragment.newInstance(username)
         val activity = activity as? SingleFragmentActivity
         if (activity != null) {
             activity.changeFragment(profileFragment)
-        }else{
+        } else {
             Log.e("ProjectsFragment", "Parent activity is not SingleFragmentActivity")
         }
 
