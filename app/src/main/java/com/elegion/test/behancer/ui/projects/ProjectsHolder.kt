@@ -28,13 +28,12 @@ class ProjectsHolder(
         onItemClicked: (username: String) -> Unit
 
     ) {
-        if(project.cover?.photoUrl != null) {
+        if (project.cover?.photoUrl != null) {
             Picasso.with(image.context).load(project.cover?.photoUrl)
                 .fit()
                 .into(image)
-        }else{
-
         }
+
         name.text = project.name
         userName.text = project.ownerList?.get(FIRST_OWNER_INDEX)?.username.orEmpty()
         publishedDate.text = format(project.publishedOn)

@@ -6,8 +6,7 @@ import com.elegion.test.behancer.data.Storage
 import com.elegion.test.behancer.data.database.BehanceDatabase
 
 class AppDelegate : Application() {
-    var storage: Storage? = null
-        private set
+    lateinit var storage: Storage
 
     override fun onCreate() {
         super.onCreate()
