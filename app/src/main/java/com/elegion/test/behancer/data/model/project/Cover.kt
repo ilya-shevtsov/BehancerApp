@@ -14,20 +14,17 @@ import java.io.Serializable
         childColumns = [("project_id")]
     )]
 )
-class Cover : Serializable {
+data class Cover(
     @PrimaryKey
     @ColumnInfo(name = "id")
-    var id = 0
+    var id: Int = 0,
 
     @ColumnInfo(name = "photo_url")
     @SerializedName("202")
-    var photoUrl: String? = null
-        private set
+    var photoUrl: String? = null,
+
 
     @ColumnInfo(name = "project_id")
-    var projectId = 0
+    var projectId: Int = 0
 
-    fun setPhotoUrl(photoUrl: String) {
-        this.photoUrl = photoUrl
-    }
-}
+) : Serializable

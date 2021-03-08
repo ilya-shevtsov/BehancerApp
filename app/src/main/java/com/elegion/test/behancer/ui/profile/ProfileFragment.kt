@@ -2,6 +2,7 @@ package com.elegion.test.behancer.ui.profile
 
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -38,7 +39,7 @@ class ProfileFragment : Fragment(), Refreshable {
 
     companion object {
         const val PROFILE_KEY = "PROFILE_KEY"
-        fun newInstance(args: Bundle?): ProfileFragment? {
+        fun newInstance(args: Bundle): ProfileFragment {
             val fragment = ProfileFragment()
             fragment.arguments = args
             return fragment
@@ -105,7 +106,7 @@ class ProfileFragment : Fragment(), Refreshable {
                     mStorage.getUser(mUsername) else null
             }
             .observeOn(AndroidSchedulers.mainThread())
-            .doOnSubscribe { disposable: Disposable? ->
+            .doOnSubscribe {
                 mRefreshOwner.setRefreshState(
                     true
                 )
@@ -118,6 +119,7 @@ class ProfileFragment : Fragment(), Refreshable {
                     bind(response.user)
                 }
             ) {
+                Log.e("ProfileFragment","This is what went wrong $it")
                 mErrorView.visibility = View.VISIBLE
                 mProfileView.visibility = View.GONE
             }

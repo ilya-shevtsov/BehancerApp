@@ -9,8 +9,9 @@ import com.elegion.test.behancer.AppDelegate
 import com.elegion.test.behancer.R
 import com.elegion.test.behancer.data.Storage
 import com.elegion.test.behancer.data.Storage.StorageOwner
+import com.elegion.test.behancer.ui.projects.ProjectsFragment
 
-abstract class SingleFragmentActivity : AppCompatActivity(), StorageOwner, OnRefreshListener,
+open class SingleFragmentActivity : AppCompatActivity(), StorageOwner, OnRefreshListener,
     RefreshOwner {
 
     private lateinit var refresher: SwipeRefreshLayout
@@ -23,11 +24,11 @@ abstract class SingleFragmentActivity : AppCompatActivity(), StorageOwner, OnRef
         refresher.setOnRefreshListener(this)
 
         if (savedInstanceState == null){
-            changeFragment(fragment = getFragment())
+            changeFragment(fragment = ProjectsFragment.newInstance())
         }
     }
 
-    protected abstract fun getFragment(): Fragment
+//    protected abstract fun getFragment(): Fragment
 
     open fun changeFragment(fragment: Fragment) {
         val addToBackStack = supportFragmentManager.findFragmentById(R.id.fragmentContainer) != null
