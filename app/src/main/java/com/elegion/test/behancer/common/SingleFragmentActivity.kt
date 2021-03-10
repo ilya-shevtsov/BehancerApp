@@ -39,7 +39,6 @@ open class SingleFragmentActivity : AppCompatActivity(), StorageOwner, OnRefresh
         transaction.commit()
     }
 
-
     override fun onRefresh() {
         val fragment = supportFragmentManager.findFragmentById(R.id.fragmentContainer)
 
@@ -57,11 +56,4 @@ open class SingleFragmentActivity : AppCompatActivity(), StorageOwner, OnRefresh
     override fun obtainStorage(): Storage? {
         return (applicationContext as AppDelegate).storage
     }
-
-//    fun openFragment(fragment: Fragment) {
-//        supportFragmentManager.beginTransaction()
-//            .replace(R.id.fragmentContainer, fragment)
-//            .addToBackStack(fragment::class.java.canonicalName)
-//            .commit()
-//    }
 }
